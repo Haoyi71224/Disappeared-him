@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>青阳中学 - 内部信息门户</title>
+    <style>
+        /* Windows XP / 老式系统风格 */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap');
+        
+        body {
+            background-color: #008080; /* 经典Win98蓝 */
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 4 4"><path fill="%23006060" d="M-1 1h2v2H-1z"/></svg>'); /* 网格纹理 */
+            font-family: 'Noto Sans SC', sans-serif;
+            font-size: 14px;
+            color: #000;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            animation: flicker 0.15s infinite; /* CRT闪烁效果 */
+        }
+
+        /* CRT 闪烁动画 */
+        @keyframes flicker {
+            0% { opacity: 0.97; }
+            50% { opacity: 1; }
+            100% { opacity: 0.98; }
+        }
+
+        /* 扫描线效果 */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                transparent 50%,
+                rgba(0, 0, 0, 0.1) 50%
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .window {
+            width: 900px;
+            background-color: #ece9d8;
+            border: 2px solid;
+            border-color: #ffffff #808080 #808080 #ffffff;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.5);
+        }
+
+        .title-bar {
+            background: linear-gradient(to right, #0054e3, #268dff);
+            color: white;
+            padding: 3px 5px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #808080;
+        }
+
+        .title-bar-text {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .title-bar-controls button {
+            width: 20px;
+            height: 20px;
+            border: 1px solid #fff;
+            background-color: #ece9d8;
+            font-weight: bold;
+            line-height: 1;
+            padding: 0;
+            margin-left: 2px;
+        }
+
+        .menu-bar {
+            background-color: #ece9d8;
+            padding: 2px 5px;
+            border-bottom: 1px solid #aca899;
+        }
+
+        .menu-bar span {
+            padding: 3px 8px;
+            cursor: pointer;
+        }
+
+        .menu-bar span:hover {
+            background-color: #316ac5;
+            color: white;
+        }
+
+        .content {
+            padding: 15px;
+        }
+
+        .login-info {
+            background-color: #fff;
+            border: 1px solid #808080;
+            padding: 10px;
+            margin-bottom: 15px;
+            font-size: 12px;
+        }
+
+        .panel {
+            background-color: #fff;
+            border: 1px solid #808080;
+            margin-bottom: 15px;
+        }
+
+        .panel-header {
+            background: linear-gradient(to right, #dce6f7, #ffffff);
+            padding: 5px 10px;
+            font-weight: bold;
+            border-bottom: 1px solid #808080;
+        }
+
+        .panel-body {
+            padding: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 5px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f0f0f0;
+        }
+
+        .deleted {
+            color: #888;
+            text-decoration: line-through;
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+
+        .warning {
+            color: #cc6600;
+        }
+
+        .file-icon {
+            width: 32px;
+            height: 32px;
+            background-color: #ffcc00;
+            border: 1px solid #996600;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: #663300;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        .status-bar {
+            background-color: #ece9d8;
+            border-top: 1px solid #aca899;
+            padding: 3px 5px;
+            font-size: 12px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .glitch {
+            animation: glitch-text 1s infinite;
+        }
+
+        @keyframes glitch-text {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="window">
+        <div class="title-bar">
+            <div class="title-bar-text">
+                📁 青阳中学内部信息门户 - [学生档案管理子系统]
+            </div>
+            <div class="title-bar-controls">
+                <button>_</button>
+                <button>□</button>
+                <button>X</button>
+            </div>
+        </div>
+        
+        <div class="menu-bar">
+            <span>文件(F)</span>
+            <span>编辑(E)</span>
+            <span>查看(V)</span>
+            <span>工具(T)</span>
+            <span>帮助(H)</span>
+        </div>
+
+        <div class="content">
+            <div class="login-info">
+                <strong>当前用户:</strong> guest (访客权限) <br>
+                <strong>上次登录:</strong> 2014-09-15 23:47:12 (系统警告：距上次登录已超过8年) <br>
+                <strong>系统状态:</strong> <span class="warning">部分数据已归档/损坏</span>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header">📢 系统公告</div>
+                <div class="panel-body">
+                    <p class="error">由于不可抗力因素，本校高中部已于2014年9月16日起无限期封闭。所有非涉密档案已迁移至新校区。本系统仅保留基础索引功能。</p>
+                    <p>如需查询初中部档案，请联系管理员陈默。</p>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header">🔍 学生档案查询结果 (搜索: 林晓)</div>
+                <div class="panel-body">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>学号</th>
+                                <th>姓名</th>
+                                <th>班级</th>
+                                <th>入学日期</th>
+                                <th>状态</th>
+                                <th>备注</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="deleted">
+                                <td>20140732</td>
+                                <td>林晓</td>
+                                <td>高一(3)班</td>
+                                <td>2014-09-01</td>
+                                <td><span class="error">已注销</span></td>
+                                <td>档案记录缺失 (Error Code: 0x80070005)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p style="margin-top: 10px; font-size: 12px; color: #666;">
+                        提示：主档案文件已被物理销毁。检测到存在<span class="warning">缓存残留文件</span>。
+                    </p>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header">💾 残留数据区 (Recovery Bin)</div>
+                <div class="panel-body">
+                    <div class="file-icon">WAV</div>
+                    <span style="vertical-align: middle;">
+                        <strong>AUDIO_LOG_20140915_234012.wav</strong> 
+                        <br>
+                        <small>大小: 2.4 MB | 创建者: 陈默 | 属性: <span class="error">加密</span></small>
+                    </span>
+                    
+                    <p style="margin-top: 15px;">
+                        <button onclick="attemptOpen()">尝试打开文件</button>
+                        <button onclick="showProperties()">属性</button>
+                    </p>
+
+                    <div id="fileOutput" style="margin-top: 10px; padding: 10px; border: 1px dashed #ccc; display: none;">
+                        <!-- JS will fill this -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header">👤 教职工关联信息</div>
+                <div class="panel-body">
+                    <p><strong>关联人员:</strong> 陈默 (网络中心管理员)</p>
+                    <p><strong>状态:</strong> <span class="glitch">离职 - 无法联系</span></p>
+                    <p><strong>备注:</strong> 案发当晚唯一拥有全校服务器最高权限的人员。曾负责维护初中部与第二校区的内部光缆。</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="status-bar">
+            <span>就绪</span>
+            <span>IP: 192.168.13.14 (内网)</span>
+        </div>
+    </div>
+
+    <script>
+        function attemptOpen() {
+            const output = document.getElementById('fileOutput');
+            output.style.display = 'block';
+            output.innerHTML = `
+                <p class="error">ACCESS DENIED</p>
+                <p>文件已加密，需要私钥 (.key) 或密码才能解密。</p>
+                <p>根据文件头分析，该音频文件包含多轨混音，疑似包含环境底噪。</p>
+                <hr>
+                <small>DEBUG INFO: 文件哈希值匹配 U盘根目录 fragment_alpha_01.key</small>
+            `;
+        }
+
+        function showProperties() {
+            const output = document.getElementById('fileOutput');
+            output.style.display = 'block';
+            output.innerHTML = `
+                <p><strong>文件属性:</strong></p>
+                <ul>
+                    <li>文件名: AUDIO_LOG_20140915_234012.wav</li>
+                    <li>编码格式: PCM S16 LE (推测)</li>
+                    <li>采样率: 44.1kHz</li>
+                    <li>加密方式: AES-256 (推测)</li>
+                    <li>元数据: 包含GPS坐标 (22.5431° N, 114.0579° E) - <span class="warning">坐标指向第二校区旧址</span></li>
+                </ul>
+            `;
+        }
+
+        // 模拟老式电脑的报错音
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // 简单的蜂鸣声模拟
+                try {
+                    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    const oscillator = audioContext.createOscillator();
+                    const gainNode = audioContext.createGain();
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    oscillator.frequency.value = 400;
+                    oscillator.type = 'sine';
+                    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.1);
+                    oscillator.start(audioContext.currentTime);
+                    oscillator.stop(audioContext.currentTime + 0.1);
+                } catch(e) {}
+            });
+        });
+    </script>
+</body>
+</html>
