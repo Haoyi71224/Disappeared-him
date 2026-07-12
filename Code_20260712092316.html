@@ -1,0 +1,37 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>福安家常菜馆 - 量大实惠</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>福安家常菜馆</h1>
+    <p class="sub">营业时间 9:00-21:00 ｜ 订餐热线 156-xxxx-xxxx</p>
+  </header>
+
+  <main>
+    <p>欢迎光临福安家常菜馆，本店已于 X 月 X 日歇业，此页面仅作存档。</p>
+    <!-- 隐藏线索：HTML 注释里 -->
+    <!-- 戴远辰的登山包遗落在后厨 —— 搜"福安饭"试试？ -->
+
+    <div class="menu">
+      <h3>招牌菜</h3>
+      <ul>
+        <li>大盘鸡 —— <a href="javascript:void(0)" onclick="reveal()">（点击看看？）</a></li>
+        <li>花生糕</li>
+        <li>汴京宫廷膳...</li>
+      </ul>
+    </div>
+
+    <div class="search-box">
+      <input type="text" id="kw" placeholder="在本站搜索关键词..." />
+      <button onclick="search()">搜索</button>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
